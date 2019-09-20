@@ -15,17 +15,21 @@ const Date = styled.button`
 `;
 
 const DatePicker = ({ archive, changeListenDate }) => {
-  const dates = archive.map(el => ({
-    id: el.id,
-    date: el.streams[0].formattedDate,
-  }));
+  const dates = archive
+    .filter(el => el.streams.length !== 0)
+    .map(el => ({
+      id: el.id,
+      date: el.streams[0].formattedDate,
+    }));
 
   return (
     <>
-      <p>Pick a date to get the archives</p>
+      <p style={{ padding: '.8rem' }}>Pick a date to get the archives</p>
       <DateContainer>
         {dates.map(date => (
-          <Date onClick={() => changeListenDate(date.id)}>{date.date}</Date>
+          <Date key={date.id} onClick={() => changeListenDate(date.id)}>
+            {date.date}
+          </Date>
         ))}
       </DateContainer>
     </>
