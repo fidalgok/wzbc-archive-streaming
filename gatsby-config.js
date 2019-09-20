@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `WZBC Archive Streaming`,
-    description: `Find your next favorite artist. This barebones website allows you to listen to the WZBC archives. Pick a date and start a stream.`,
+    description: `A fan made site for listening to the WZBC archive streams.`,
     author: `@fidalgok`,
   },
   plugins: [
@@ -32,4 +32,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};
