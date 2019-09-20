@@ -4,6 +4,7 @@ import { formatStreams } from '../dateUtils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import DatePicker from '../components/DatePicker';
+import CurrentlyPlaying from '../components/CurrentlyPlaying';
 
 // change this up to just automatically create playlists for a day
 // that you choose. We already know the format of the mp3 file to stream
@@ -21,8 +22,8 @@ const Stream = styled.div`
 export const AudioStreamApp = props => {
   const [streams, setStreams] = React.useState(formatStreams());
   const [streamIdx, setStreamIdx] = React.useState(0);
-
-  const currentStream = streams[streamIdx];
+  const [selectedStream, setSelectedStream] = React.useState(null);
+  const pickedDateStreams = streams[streamIdx];
 
   function changeListenDate(id) {
     const idx = streams.findIndex(s => s.id === id);
@@ -31,18 +32,18 @@ export const AudioStreamApp = props => {
 
   return (
     <>
+      <CurrentlyPlaying stream={selectedStream} />
       <DatePicker
         changeListenDate={changeListenDate}
         archive={streams}
-        active={currentStream.id}
+        active={pickedDateStreams.id}
       />
       <StreamContainer>
-        {currentStream.streams.map((stream, i) => (
-          <Stream key={i}>
+        {pickedDateStreams.streams.map((stream, i) => (
+          <Stream key={i} onClick={() => setSelectedStream(stream)}>
             <p>
               Streamed on {stream.formattedDate} at {stream.formattedTime}
             </p>
-            <audio controls src={stream.stream} style={{ width: '100%' }} />
           </Stream>
         ))}
       </StreamContainer>

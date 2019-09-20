@@ -54,7 +54,7 @@ function getDateStreams(date = new Date()) {
     streams.push({
       formattedDate: formatDate(date, 'MMM dd'),
       formattedTime: formatDate(date.setHours(i), 'h aa'),
-      stream: baseUrl.concat(
+      url: baseUrl.concat(
         `${i >= 10 ? `-${i}-00.mp3` : '-0'.concat(`${i}-00.mp3`)}`
       ),
     });

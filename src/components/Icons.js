@@ -19,6 +19,7 @@ const SVG = styled.svg`
 
 export const WaveForm = props => (
   <SVG
+    {...props}
     className={props.className || ''}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 27.79"
@@ -290,6 +291,7 @@ export const WaveForm = props => (
 );
 export const Play = props => (
   <SVG
+    {...props}
     className={props.className || ''}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 27.79"
@@ -299,6 +301,7 @@ export const Play = props => (
 );
 export const Record = props => (
   <SVG
+    {...props}
     className={props.className || ''}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 27.79"
@@ -309,6 +312,7 @@ export const Record = props => (
 );
 export const Pause = props => (
   <SVG
+    {...props}
     className={props.className || ''}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 27.79"
