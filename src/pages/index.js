@@ -31,7 +31,11 @@ export const AudioStreamApp = props => {
 
   return (
     <>
-      <DatePicker changeListenDate={changeListenDate} archive={streams} />
+      <DatePicker
+        changeListenDate={changeListenDate}
+        archive={streams}
+        active={currentStream.id}
+      />
       <StreamContainer>
         {currentStream.streams.map((stream, i) => (
           <Stream key={i}>

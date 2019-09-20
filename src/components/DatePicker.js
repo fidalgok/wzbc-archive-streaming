@@ -10,11 +10,35 @@ const Date = styled.button`
   border: none;
   background: none;
   font-size: inherit;
-  padding: 0.8rem;
+  margin: 0.8rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.5rem;
+    width: 3.5rem;
+    transition: all 0.2s ease;
+    &:hover {
+      background: var(--color-neutral-2);
+    }
+  }
+  & .active {
+    background: var(--color-primary-5);
+    color: var(--color-neutral-white);
+
+    &:hover {
+      background: var(--color-primary-5);
+    }
+  }
 `;
 
-const DatePicker = ({ archive, changeListenDate }) => {
+const DatePicker = ({ archive, changeListenDate, active }) => {
   const dates = archive
     .filter(el => el.streams.length !== 0)
     .map(el => ({
@@ -28,7 +52,9 @@ const DatePicker = ({ archive, changeListenDate }) => {
       <DateContainer>
         {dates.map(date => (
           <Date key={date.id} onClick={() => changeListenDate(date.id)}>
-            {date.date}
+            <span className={active === date.id ? `active` : ''}>
+              {date.date}
+            </span>
           </Date>
         ))}
       </DateContainer>

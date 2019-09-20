@@ -22,10 +22,10 @@ module.exports = {
         name: `wzbc-archive-player`,
         short_name: `wzbc-archives`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#ff5252`,
+        theme_color: `#ff5252`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/app-icon.png`, // This path is relative to the root of the site.
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
