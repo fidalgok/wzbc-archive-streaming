@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import VisuallyHidden from '@reach/visually-hidden';
 import { Pause, Play } from './Icons';
+import { fancyTimeFormat } from '../dateUtils';
 
 const PlayerContainer = styled.div`
   display: grid;
@@ -20,6 +22,15 @@ const Button = styled.button`
   border: none;
   outline: none;
 `;
+const IconPause = styled(Pause)`
+  height: 100%;
+  cursor: pointer;
+`;
+
+const IconPlay = styled(Play)`
+  height: 100%;
+  cursor: pointer;
+`;
 const StreamInfo = styled.div`
   grid-area: title;
 `;
@@ -34,19 +45,16 @@ const Progress = styled.div`
     background: var(--color-primary-5);
   }
 `;
+
+const Thumb = styled.div`
+  cursor: pointer;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: hsl(0, 51%, 46%);
+`;
+
 const PlayerControlContainer = styled.div`
   grid-area: action;
-`;
-const IconPause = styled(Pause)`
-  height: 100%;
-
-  cursor: pointer;
-`;
-
-const IconPlay = styled(Play)`
-  height: 100%;
-
-  cursor: pointer;
 `;
 
 const initialState = {
@@ -111,15 +119,12 @@ const Player = ({ stream }) => {
     dispatch({ type: 'pauseplay' });
   }
   function handleTimeUpdate() {
-    console.log('updating percent complete');
     const percentComplete = parseFloat(
       (playerRef.current.currentTime / playerRef.current.duration) * 100
     );
     dispatch({ type: 'timeupdate', payload: { progress: percentComplete } });
   }
   function handleScrub(e) {
-    e.persist();
-    console.log(e);
     if (!canplay) return;
     const clickPosition =
       (e.pageX - progressRef.current.offsetLeft) /
@@ -131,13 +136,19 @@ const Player = ({ stream }) => {
   return (
     <PlayerContainer>
       <PlayerControlContainer>
-        {playerstatus === 'pause' ? (
-          <Button onClick={handlePausePlay}>
-            <IconPlay /> play
-          </Button>
-        ) : (
-          <IconPause onClick={handlePausePlay} />
-        )}
+        <Button onClick={handlePausePlay}>
+          {playerstatus === 'pause' ? (
+            <>
+              <IconPlay />
+              <VisuallyHidden>play</VisuallyHidden>
+            </>
+          ) : (
+            <>
+              <IconPause />
+              <VisuallyHidden>pause</VisuallyHidden>
+            </>
+          )}
+        </Button>
       </PlayerControlContainer>
       <StreamInfo>
         {stream ? (
@@ -155,6 +166,15 @@ const Player = ({ stream }) => {
       >
         <div className="progress-bar" />
       </Progress>
+      <div>
+        {playerRef.current &&
+          fancyTimeFormat(
+            Math.floor(
+              playerRef.current.duration * (+percentcomplete.slice(0, -1) / 100)
+            )
+          )}{' '}
+        / {playerRef.current && fancyTimeFormat(playerRef.current.duration)}
+      </div>
       <audio
         ref={playerRef}
         src={stream ? stream.url : ''}

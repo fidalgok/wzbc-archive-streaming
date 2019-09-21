@@ -16,13 +16,14 @@ const Date = styled.button`
   justify-content: center;
   align-items: center;
 
-  span {
+  div {
     border-radius: 50px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 3.5rem;
-    width: 3.5rem;
+    height: 4rem;
+    width: 4rem;
     transition: all 0.2s ease;
     &:hover {
       background: var(--color-neutral-2);
@@ -44,6 +45,7 @@ const DatePicker = ({ archive, changeListenDate, active }) => {
     .map(el => ({
       id: el.id,
       date: el.streams[0].formattedDate,
+      dayOfWeek: el.streams[0].dayOfWeek,
     }));
 
   return (
@@ -52,9 +54,10 @@ const DatePicker = ({ archive, changeListenDate, active }) => {
       <DateContainer>
         {dates.map(date => (
           <Date key={date.id} onClick={() => changeListenDate(date.id)}>
-            <span className={active === date.id ? `active` : ''}>
-              {date.date}
-            </span>
+            <div className={active === date.id ? `active` : ''}>
+              <span>{date.dayOfWeek}</span>
+              <span>{date.date}</span>
+            </div>
           </Date>
         ))}
       </DateContainer>

@@ -22,7 +22,9 @@ const Stream = styled.div`
 export const AudioStreamApp = props => {
   const [streams, setStreams] = React.useState(formatStreams());
   const [streamIdx, setStreamIdx] = React.useState(0);
-  const [selectedStream, setSelectedStream] = React.useState(null);
+  const [selectedStream, setSelectedStream] = React.useState(
+    streams[streamIdx].streams[0]
+  );
   const pickedDateStreams = streams[streamIdx];
 
   function changeListenDate(id) {
