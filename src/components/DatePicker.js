@@ -28,7 +28,7 @@ const Date = styled.button`
   justify-content: center;
   align-items: center;
   scroll-snap-align: center;
-
+  padding: 0 0.4rem;
   &:focus {
     outline: none;
   }
@@ -38,7 +38,7 @@ const Date = styled.button`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 4rem;
+
     width: 4rem;
     transition: background 0.12s ease;
     background: var(--color-neutral-1);

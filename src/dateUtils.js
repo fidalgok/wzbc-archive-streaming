@@ -56,7 +56,7 @@ function getDateStreams(date = new Date()) {
       formattedDate: formatDate(date, 'MMM dd'),
       formattedTime: formatDate(date.setHours(i), 'h aa'),
       url: baseUrl.concat(
-        `${i >= 10 ? `-${i}-00.mp3` : '-0'.concat(`${i}-00.mp3`)}`
+        i >= 10 ? `-${i}-00.mp3` : '-0'.concat(`${i}-00.mp3`)
       ),
     });
   }
@@ -65,7 +65,7 @@ function getDateStreams(date = new Date()) {
 
 export function fancyTimeFormat(seconds) {
   // Hours, minutes and seconds
-
+  if (isNaN(seconds)) return '00:00';
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);

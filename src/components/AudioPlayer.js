@@ -6,37 +6,52 @@ import { fancyTimeFormat } from '../dateUtils';
 
 const PlayerContainer = styled.div`
   display: grid;
-  height: 100px;
   width: 100%;
-  grid-column-gap: 20px;
+  grid-gap: 10px 20px;
+  grid-template-columns: auto 1fr;
   grid-template-areas:
     'action title'
     'action bd'
     'prog prog'
     'ft ft';
-  border: 1px solid var(--color-neutral-8);
+  border: 1px solid var(--color-neutral-3);
+  border-radius: 5px;
+  background: var(--color-neutral-1);
   padding: 0.8rem;
 `;
 const Button = styled.button`
   font-size: inherit;
+  display: flex;
   background: none;
-  border: none;
+  border: 1px solid var(--color-neutral-3);
   outline: none;
+  padding: 8px 0;
+  border-radius: 5px;
+  background: var(--color-neutral-2);
+
+  &:focus {
+    outline: none;
+  }
 `;
 const IconPause = styled(Pause)`
   height: 100%;
   cursor: pointer;
+  .secondary {
+    fill: var(--color-neutral-10);
+  }
 `;
 
 const IconPlay = styled(Play)`
   height: 100%;
   cursor: pointer;
+  .secondary {
+    fill: var(--color-neutral-10);
+  }
 `;
 const StreamInfo = styled.div`
-  grid-area: title;
+  grid-area: bd;
 `;
 const Progress = styled.div`
-  margin-left: 1rem;
   cursor: pointer;
   grid-area: prog;
   background: var(--color-neutral-2);
@@ -61,7 +76,7 @@ const PlayerControlContainer = styled.div`
 const initialState = {
   playerstatus: 'pause',
   canplay: false,
-  percentcomplete: 0,
+  percentcomplete: '0%',
   waiting: false,
   ended: false,
 };
@@ -81,13 +96,20 @@ const playerReducer = (state, action) => {
         playerstatus: state.playerstatus === 'play' ? 'pause' : 'play',
       };
     }
+    case 'streamupdate': {
+      // when a new stream is selected reset the player status to pause
+      return {
+        ...state,
+        playerstatus: 'pause',
+      };
+    }
     case 'timeupdate': {
       // do something with the updated time here
       return {
         ...state,
-        percentcomplete: `${
-          isNaN(action.payload.progress) ? 0 : action.payload.progress
-        }%`,
+        percentcomplete: isNaN(action.payload.progress)
+          ? '0%'
+          : `${action.payload.progress}%`,
       };
     }
 
@@ -105,13 +127,16 @@ const Player = ({ stream }) => {
   const playerRef = React.useRef(null);
   const progressRef = React.useRef(null);
 
+  React.useEffect(() => {
+    dispatch({ type: 'streamupdate' });
+  }, [stream.url]);
+
   function playerReady() {
-    console.log('player is ready to play');
     dispatch({ type: 'canplay' });
   }
   function handlePausePlay() {
     if (!canplay) return;
-    console.log('changing play state');
+
     if (playerstatus === 'play') {
       playerRef.current.pause();
     } else {
@@ -151,10 +176,11 @@ const Player = ({ stream }) => {
           )}
         </Button>
       </PlayerControlContainer>
+      <div style={{ gridArea: 'title' }}>WZBC Archive</div>
       <StreamInfo>
         {stream ? (
           <div>
-            streamed on {stream.formattedDate} at {stream.formattedTime}
+            {stream.formattedDate} - {stream.formattedTime}
           </div>
         ) : (
           <div>No Stream selected</div>
@@ -175,7 +201,10 @@ const Player = ({ stream }) => {
               playerRef.current.duration * (+percentcomplete.slice(0, -1) / 100)
             )
           )}{' '}
-        / {playerRef.current && fancyTimeFormat(playerRef.current.duration)}
+        /{' '}
+        {playerRef.current &&
+          canplay &&
+          fancyTimeFormat(playerRef.current.duration)}
       </div>
       <audio
         ref={playerRef}
