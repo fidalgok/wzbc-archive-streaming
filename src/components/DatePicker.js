@@ -3,28 +3,46 @@ import styled from '@emotion/styled';
 
 const DateContainer = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
 `;
-
+const Heading = styled.p`
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 0;
+  margin: 1.2rem 0 1.2rem 0;
+  line-height: 1.2;
+  letter-spacing: 1px;
+`;
 const Date = styled.button`
   border: none;
   background: none;
   font-size: inherit;
-  margin: 0.8rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  scroll-snap-align: center;
 
+  &:focus {
+    outline: none;
+  }
   div {
-    border-radius: 50px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 4rem;
     width: 4rem;
-    transition: all 0.2s ease;
+    transition: background 0.12s ease;
+    background: var(--color-neutral-1);
+    border: 1px solid var(--color-neutral-3);
     &:hover {
       background: var(--color-neutral-2);
     }
@@ -50,13 +68,16 @@ const DatePicker = ({ archive, changeListenDate, active }) => {
 
   return (
     <>
-      <p style={{ padding: '.8rem' }}>Pick a date to get the archives</p>
+      <Heading className="heading">Archive Dates</Heading>
       <DateContainer>
         {dates.map(date => (
           <Date key={date.id} onClick={() => changeListenDate(date.id)}>
             <div className={active === date.id ? `active` : ''}>
               <span>{date.dayOfWeek}</span>
-              <span>{date.date}</span>
+              <span style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
+                {date.date.slice(4)}
+              </span>
+              <span>{date.date.slice(0, 3)}</span>
             </div>
           </Date>
         ))}

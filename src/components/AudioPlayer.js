@@ -12,6 +12,7 @@ const PlayerContainer = styled.div`
   grid-template-areas:
     'action title'
     'action bd'
+    'prog prog'
     'ft ft';
   border: 1px solid var(--color-neutral-8);
   padding: 0.8rem;
@@ -37,7 +38,7 @@ const StreamInfo = styled.div`
 const Progress = styled.div`
   margin-left: 1rem;
   cursor: pointer;
-  grid-area: ft;
+  grid-area: prog;
   background: var(--color-neutral-2);
   .progress-bar {
     height: 8px;
@@ -166,8 +167,9 @@ const Player = ({ stream }) => {
       >
         <div className="progress-bar" />
       </Progress>
-      <div>
+      <div style={{ gridArea: 'ft' }}>
         {playerRef.current &&
+          canplay &&
           fancyTimeFormat(
             Math.floor(
               playerRef.current.duration * (+percentcomplete.slice(0, -1) / 100)
