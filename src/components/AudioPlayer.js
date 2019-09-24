@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import VisuallyHidden from '@reach/visually-hidden';
-import { Pause, Play } from './Icons';
+import { Pause, Play, Rewind, FastForward } from './Icons';
 import { fancyTimeFormat } from '../dateUtils';
 
 const PlayerContainer = styled.div`
@@ -10,10 +10,10 @@ const PlayerContainer = styled.div`
   grid-gap: 10px 20px;
   grid-template-columns: auto 1fr;
   grid-template-areas:
-    'action title'
-    'action bd'
-    'prog prog'
-    'ft ft';
+    'action title skip'
+    'action bd skip'
+    'prog prog prog'
+    'ft ft ft';
   border: 1px solid var(--color-neutral-3);
   border-radius: 5px;
   background: var(--color-neutral-1);
@@ -31,6 +31,8 @@ const Button = styled.button`
 
   &:focus {
     outline: none;
+    box-shadow: 0 0 0 2px var(--color-neutral-8),
+      0 0 3px 1px var(--color-neutral-8);
   }
 `;
 const IconPause = styled(Pause)`
@@ -47,6 +49,36 @@ const IconPlay = styled(Play)`
   .secondary {
     fill: var(--color-neutral-10);
   }
+`;
+const IconFastForward = styled(FastForward)`
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  .primary {
+    fill: var(--color-neutral-10);
+  }
+  .secondary {
+    fill: var(--color-neutral-5);
+  }
+`;
+const IconRewind = styled(Rewind)`
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  .primary {
+    fill: var(--color-neutral-10);
+  }
+  .secondary {
+    fill: var(--color-neutral-5);
+  }
+`;
+const SkipButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
 const StreamInfo = styled.div`
   grid-area: bd;
@@ -159,6 +191,16 @@ const Player = ({ stream }) => {
     playerRef.current.currentTime = clickTime;
     handleTimeUpdate();
   }
+  function fastForward() {
+    if (!canplay) return;
+    playerRef.current.currentTime += 30;
+    handleTimeUpdate();
+  }
+  function rewind() {
+    if (!canplay) return;
+    playerRef.current.currentTime -= 15;
+    handleTimeUpdate();
+  }
   return (
     <PlayerContainer>
       <PlayerControlContainer>
@@ -186,6 +228,23 @@ const Player = ({ stream }) => {
           <div>No Stream selected</div>
         )}
       </StreamInfo>
+      <div
+        style={{
+          gridArea: 'skip',
+          display: 'grid',
+          gridGap: '1rem',
+          gridTemplateColumns: '1fr 1fr',
+        }}
+      >
+        <SkipButton onClick={rewind}>
+          15s
+          <IconRewind />
+        </SkipButton>
+        <SkipButton onClick={fastForward}>
+          30s
+          <IconFastForward />
+        </SkipButton>
+      </div>
       <Progress
         onClick={handleScrub}
         percentcomplete={percentcomplete}

@@ -323,3 +323,38 @@ export const Pause = props => (
     />
   </SVG>
 );
+
+export const Rewind = ({ className, ...props }) => (
+  <SVG
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className={className}
+  >
+    <path
+      className="secondary"
+      d="M22 5a1 1 0 0 0-1.5-.86l-12 7a1 1 0 0 0 0 1.72l12 7A1 1 0 0 0 22 19V5z"
+    />
+    <path
+      className="primary"
+      d="M15 5a1 1 0 0 0-1.5-.86l-12 7a1 1 0 0 0 0 1.72l12 7A1 1 0 0 0 15 19V5z"
+    />
+  </SVG>
+);
+export const FastForward = ({ className, ...props }) => (
+  <SVG
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className={className}
+  >
+    <path
+      className="secondary"
+      d="M1 5a1 1 0 0 1 1.5-.86l12 7a1 1 0 0 1 0 1.72l-12 7A1 1 0 0 1 1 19V5z"
+    />
+    <path
+      className="primary"
+      d="M9 5a1 1 0 0 1 1.5-.86l12 7a1 1 0 0 1 0 1.72l-12 7A1 1 0 0 1 9 19V5z"
+    />
+  </SVG>
+);

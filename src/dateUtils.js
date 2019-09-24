@@ -1,9 +1,11 @@
-import { subDays, format, getDate, getMonth, isToday } from 'date-fns';
+import { subDays, format, isToday } from 'date-fns';
 
 export const formatDate = (date, string) => format(date, string);
 
 export const formatStreams = () => {
-  const today = new Date();
+  // since WZBC is located in boston, convert to EST first
+  const estDate = new Date().toLocaleString({ timeZone: 'America/New_York' });
+  const today = new Date(estDate);
   const dates = Array.from({ length: 14 });
   const formattedStreams = dates.map((_, i) => {
     const currentDate = subDays(today, i);

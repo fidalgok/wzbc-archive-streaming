@@ -28,10 +28,9 @@ const Date = styled.button`
   justify-content: center;
   align-items: center;
   scroll-snap-align: center;
-  padding: 0 0.4rem;
-  &:focus {
-    outline: none;
-  }
+  margin: 0.4rem 0.4rem;
+  padding: 0;
+
   div {
     border-radius: 5px;
     display: flex;

@@ -22,7 +22,7 @@ const StreamContainer = styled.div`
   }
   scrollbar-width: none;
   scroll-snap-type: x proximity;
-  padding: 0 0.5rem;
+  padding: 0.4rem 0.5rem;
 `;
 const Heading = styled.p`
   font-size: 1.6rem;
@@ -33,7 +33,7 @@ const Heading = styled.p`
   letter-spacing: 1px;
 `;
 
-const Stream = styled.div`
+const Stream = styled.button`
   border-radius: 5px;
   display: flex;
   flex-direction: column;

@@ -642,6 +642,11 @@ pre tt:before,
 pre tt:after {
   content: "";
 }
+button:focus, input[type="submit"]:focus{
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-neutral-8),
+      0 0 3px 1px var(--color-neutral-8);
+}
 @media only screen and (max-width: 480px) {
   html {
     font-size: 100%;
