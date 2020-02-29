@@ -151,6 +151,7 @@ const playerReducer = (state, action) => {
 };
 
 const Player = ({ stream }) => {
+
   const [
     { playerstatus, percentcomplete, canplay, ended },
     dispatch,
@@ -161,7 +162,7 @@ const Player = ({ stream }) => {
 
   React.useEffect(() => {
     dispatch({ type: 'streamupdate' });
-  }, [stream.url]);
+  }, [stream]);
 
   function playerReady() {
     dispatch({ type: 'canplay' });
@@ -201,6 +202,7 @@ const Player = ({ stream }) => {
     playerRef.current.currentTime -= 15;
     handleTimeUpdate();
   }
+
   return (
     <PlayerContainer>
       <PlayerControlContainer>

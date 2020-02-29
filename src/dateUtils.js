@@ -13,7 +13,7 @@ export const formatStreams = () => {
       id: formatDate(currentDate, 'M-dd-yyyy'),
       streams: getDateStreams(currentDate),
     };
-  });
+  }).filter(stream => stream.streams.length);
 
   return formattedStreams;
 };
@@ -52,6 +52,7 @@ function getDateStreams(date = new Date()) {
   const currentHour = date.getHours();
 
   const streams = [];
+  // nothing really plays before 8am... No need to know about those hours
   for (let i = 8; i <= currentHour; i++) {
     streams.push({
       dayOfWeek: formatDate(date, 'EEEEEE'),

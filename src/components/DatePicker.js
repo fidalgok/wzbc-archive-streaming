@@ -65,6 +65,10 @@ const DatePicker = ({ archive, changeListenDate, active }) => {
       dayOfWeek: el.streams[0].dayOfWeek,
     }));
 
+  if (dates.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <Heading className="heading">Archive Dates</Heading>
