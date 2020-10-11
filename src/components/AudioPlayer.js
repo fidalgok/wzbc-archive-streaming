@@ -114,6 +114,7 @@ const initialState = {
 };
 
 const playerReducer = (state, action) => {
+
   switch (action.type) {
     case 'canplay': {
       return {
@@ -161,16 +162,20 @@ const Player = ({ stream }) => {
   const progressRef = React.useRef(null);
 
   React.useEffect(() => {
+
     dispatch({ type: 'streamupdate' });
   }, [stream]);
 
   function playerReady() {
     dispatch({ type: 'canplay' });
   }
-  function handlePausePlay() {
+  function handlePausePlay(whoCalled) {
     if (!canplay) return;
+    const isPaused = playerRef.current.paused;
+    if (whoCalled === 'onPause' && isPaused) return;
+    if (whoCalled === 'onPlay' && !isPaused) return;
 
-    if (playerstatus === 'play') {
+    if (!isPaused) {
       playerRef.current.pause();
     } else {
       playerRef.current.play();
@@ -213,11 +218,11 @@ const Player = ({ stream }) => {
               <VisuallyHidden>play</VisuallyHidden>
             </>
           ) : (
-            <>
-              <IconPause />
-              <VisuallyHidden>pause</VisuallyHidden>
-            </>
-          )}
+              <>
+                <IconPause />
+                <VisuallyHidden>pause</VisuallyHidden>
+              </>
+            )}
         </Button>
       </PlayerControlContainer>
       <div style={{ gridArea: 'title' }}>WZBC Archive</div>
@@ -227,8 +232,8 @@ const Player = ({ stream }) => {
             {stream.formattedDate} - {stream.formattedTime}
           </div>
         ) : (
-          <div>No Stream selected</div>
-        )}
+            <div>No Stream selected</div>
+          )}
       </StreamInfo>
       <div
         style={{
@@ -272,6 +277,8 @@ const Player = ({ stream }) => {
         src={stream ? stream.url : ''}
         onCanPlay={playerReady}
         onTimeUpdate={handleTimeUpdate}
+        onPause={() => handlePausePlay('onPause')}
+        onPlay={() => handlePausePlay('onPlay')}
       />
     </PlayerContainer>
   );
