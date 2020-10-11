@@ -169,18 +169,16 @@ const Player = ({ stream }) => {
   function playerReady() {
     dispatch({ type: 'canplay' });
   }
-  function handlePausePlay(whoCalled) {
+  function handlePausePlay(e) {
+
     if (!canplay) return;
     const isPaused = playerRef.current.paused;
-    if (whoCalled === 'onPause' && isPaused) return;
-    if (whoCalled === 'onPlay' && !isPaused) return;
 
     if (!isPaused) {
       playerRef.current.pause();
     } else {
       playerRef.current.play();
     }
-    dispatch({ type: 'pauseplay' });
   }
   function handleTimeUpdate() {
     const percentComplete = parseFloat(
@@ -212,7 +210,7 @@ const Player = ({ stream }) => {
     <PlayerContainer>
       <PlayerControlContainer>
         <Button onClick={handlePausePlay}>
-          {playerstatus === 'pause' ? (
+          {playerRef?.current?.paused ? (
             <>
               <IconPlay />
               <VisuallyHidden>play</VisuallyHidden>
@@ -277,8 +275,7 @@ const Player = ({ stream }) => {
         src={stream ? stream.url : ''}
         onCanPlay={playerReady}
         onTimeUpdate={handleTimeUpdate}
-        onPause={() => handlePausePlay('onPause')}
-        onPlay={() => handlePausePlay('onPlay')}
+
       />
     </PlayerContainer>
   );
