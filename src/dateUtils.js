@@ -48,7 +48,7 @@ function getDateStreams(date = new Date()) {
   }
 
   const formattedDate = format(date, 'yyyy-MM-dd');
-  const baseUrl = `http://zbconline.com/wzbc-${formattedDate}`;
+  const baseUrl = `https://zbconline.com/wzbc-${formattedDate}`;
   const currentHour = date.getHours();
 
   const streams = [];
