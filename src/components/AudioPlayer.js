@@ -161,16 +161,13 @@ const Player = ({ stream }) => {
   const progressRef = React.useRef(null);
 
   React.useEffect(() => {
-    console.log({ logMessage: 'in effect, stream update', ...stream })
     dispatch({ type: 'streamupdate' });
   }, [stream]);
 
   function playerReady() {
-    console.log('player status changed to ready')
     dispatch({ type: 'canplay' });
   }
   function handlePausePlay(e) {
-    console.log(playerRef?.current)
     if (!canplay) return;
     const isPaused = playerRef.current.paused;
 
@@ -206,7 +203,7 @@ const Player = ({ stream }) => {
     handleTimeUpdate();
   }
 
-  return console.log({ canplay, playerRef: playerRef?.current }) || (
+  return (
     <PlayerContainer>
       <PlayerControlContainer>
         <Button onClick={handlePausePlay}>
