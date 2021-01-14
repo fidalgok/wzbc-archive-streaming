@@ -132,8 +132,7 @@ const playerReducer = (state, action) => {
     case 'streamupdate': {
       // when a new stream is selected reset the player status to pause
       return {
-        ...state,
-        playerstatus: 'pause',
+        ...initialState
       };
     }
     case 'timeupdate': {
