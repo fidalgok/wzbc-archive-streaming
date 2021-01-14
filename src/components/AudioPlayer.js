@@ -162,7 +162,7 @@ const Player = ({ stream }) => {
   const progressRef = React.useRef(null);
 
   React.useEffect(() => {
-
+    console.log({ logMessage: 'in effect, stream update', ...stream })
     dispatch({ type: 'streamupdate' });
   }, [stream]);
 
