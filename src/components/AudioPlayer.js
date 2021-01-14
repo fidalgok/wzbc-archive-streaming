@@ -167,10 +167,11 @@ const Player = ({ stream }) => {
   }, [stream]);
 
   function playerReady() {
+    console.log('player status changed to ready')
     dispatch({ type: 'canplay' });
   }
   function handlePausePlay(e) {
-
+    console.log(playerRef?.current)
     if (!canplay) return;
     const isPaused = playerRef.current.paused;
 
@@ -206,7 +207,7 @@ const Player = ({ stream }) => {
     handleTimeUpdate();
   }
 
-  return (
+  return console.log({ canplay, playerRef: playerRef?.current }) || (
     <PlayerContainer>
       <PlayerControlContainer>
         <Button onClick={handlePausePlay}>
