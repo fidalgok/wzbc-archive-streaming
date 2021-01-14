@@ -274,7 +274,8 @@ const Player = ({ stream }) => {
       <audio
         ref={playerRef}
         src={stream ? stream.url : ''}
-        onCanPlay={playerReady}
+
+        onLoadedMetadata={playerReady}
         onTimeUpdate={handleTimeUpdate}
 
       />
